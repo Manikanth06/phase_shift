@@ -3,7 +3,8 @@ import 'constant.dart';
 
 class ButtonContainer extends StatelessWidget {
   String dept;
-  ButtonContainer({@required this.dept});
+  Function() onPressed;
+  ButtonContainer({@required this.dept, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class ButtonContainer extends StatelessWidget {
       height: 100.0,
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         /*color: Colors.white30,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),

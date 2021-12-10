@@ -6,6 +6,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'button_card.dart';
 import 'constant.dart';
 import 'package:foodybite_app/attach/drawer_card.dart';
+import 'package:foodybite_app/screens/screens.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+User loggedInUser;
 
 class SliderPage extends StatefulWidget {
   static String id = 'slider_screen';
@@ -15,14 +19,37 @@ class SliderPage extends StatefulWidget {
 }
 
 class _SliderPageState extends State<SliderPage> {
+  final _auth = FirebaseAuth.instance;
+
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    String em = loggedInUser.email.toString();
+    String name = em.split("@")[0];
     return Scaffold(
       backgroundColor: Colors.black54,
       appBar: AppBar(
         title: const Text("Phase Shift"),
       ),
-      drawer: DrawerCard(),
+      drawer: DrawerCard(email: em, name: name, sym: name[0]),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -77,11 +104,15 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'CSE',
+                    onPressed: (){
+                      Navigator.pushNamed(context, 'DepartmentPage');
+                    },
                   ),
                 ),
                 Expanded(
                     child: ButtonContainer(
                       dept: 'ISE',
+                      onPressed: (){},
                     )),
               ],
             ),
@@ -90,11 +121,13 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ECE',
+                    onPressed: (){},
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'EEE',
+                    onPressed: (){},
                   ),
                 ),
               ],
@@ -104,11 +137,13 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ML',
+                    onPressed: (){},
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ME',
+                    onPressed: (){},
                   ),
                 ),
               ],
@@ -118,11 +153,13 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'TC',
+                    onPressed: (){},
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'CE',
+                    onPressed: (){},
                   ),
                 ),
               ],

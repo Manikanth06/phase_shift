@@ -3,6 +3,7 @@ import 'package:foodybite_app/screens/event_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:foodybite_app/screens/event_reg_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         'EventPage': (context) => EventPage(),
         'SliderPage': (context) => SliderPage(),
         'DepartmentPage': (context) => DepartmentPage(),
+        'EventRegPage': (context) => EventRegPage(),
       },
     );
   }

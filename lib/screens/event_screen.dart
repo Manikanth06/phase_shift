@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:foodybite_app/screens/event_reg_screen.dart';
+import 'package:foodybite_app/screens/event_reg_screen.dart';
 
 const dTextStyle = TextStyle(
   color: Colors.white,
@@ -74,6 +76,9 @@ class EventPage extends StatelessWidget {
             ),
             Text("Venue : " + venue, style: dTextStyle),
             GestureDetector(
+              onTap: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EventRegPage(event: name,))),
+              },
               child: Container(
                 child: Center(
                   child: Text(
