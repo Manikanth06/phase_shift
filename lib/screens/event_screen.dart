@@ -24,74 +24,114 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Color(0XFF0A0E21),
-        scaffoldBackgroundColor: Color(0XFF0A0E21),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text("Phase Shift")),
+    return ShaderMask(
+      shaderCallback: (rect) => LinearGradient(
+        begin: Alignment.bottomCenter,
+        end: Alignment.center,
+        colors: [Colors.black, Colors.transparent],
+      ).createShader(rect),
+      blendMode: BlendMode.colorDodge,
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
+            image: AssetImage(
+              'assets/images/reg.jpg',
+            ),
+            fit: BoxFit.cover,
+          ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              color: Colors.white,
-              margin: EdgeInsets.all(12.0),
-              padding: EdgeInsets.all(8.0),
-              child: ExpansionTile(
-                initiallyExpanded: true,
-                childrenPadding: EdgeInsets.all(12.0),
-                trailing: Icon(
-                  FontAwesomeIcons.eye,
-                  color: Colors.black,
-                ),
-                backgroundColor: Colors.white,
-                title: Text(
-                  name,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 35.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                children: [
-                  Text(
-                    abs,
-                    style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.black12.withOpacity(0.4),
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }),
+              ],
+              title: Text("PHASE SHIFT"),
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Material(
+                    color: Colors.grey.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
+                      color: Colors.transparent,
+                      margin: EdgeInsets.all(12.0),
+                      // padding: EdgeInsets.all(8.0),
+                      child: ExpansionTile(
+                        backgroundColor: Colors.transparent,
+                        initiallyExpanded: true,
+                        childrenPadding: EdgeInsets.all(12.0),
+                        trailing: Icon(
+                          FontAwesomeIcons.eye,
+                          color: Colors.black,
+                        ),
+                        title: Text(
+                          name,
+                          style: TextStyle(
+                            color: Color(0xE1FFD4AC),
+                            fontSize: 35.0,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            abs,
+                            style: TextStyle(
+                                color: Colors.grey.shade200,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w400
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Text("Event Co-ordinator : " + cod, style: dTextStyle),
-            Text("Contact : " + contact, style: dTextStyle),
-            Text(
-              "Event Date : " + date,
-              style: dTextStyle,
-            ),
-            Text("Venue : " + venue, style: dTextStyle),
-            GestureDetector(
-              onTap: () => {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EventRegPage(event: name,))),
-              },
-              child: Container(
-                child: Center(
-                  child: Text(
-                    "Register",
-                    style: dTextStyle.copyWith(color: Colors.black),
+                ),
+                Text("Event Co-ordinator : " + cod, style: dTextStyle),
+                Text("Contact : " + contact, style: dTextStyle),
+                Text(
+                  "Event Date : " + date,
+                  style: dTextStyle,
+                ),
+                Text("Venue : " + venue, style: dTextStyle),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Material(
+                    color: Colors.blue.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
+                      margin: EdgeInsets.all(1.0),
+                      child: GestureDetector(
+                        onTap: () => {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => EventRegPage(event: name,))),
+                        },
+                        child: Container(
+                          child: Center(
+                            child: Text(
+                              "Register",
+                              style: dTextStyle.copyWith(color: Colors.white),
+                            ),
+                          ),
+                          height: 40.0,
+                          margin: EdgeInsets.all(12.0),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                color: Colors.white,
-                height: 60.0,
-                margin: EdgeInsets.all(12.0),
-              ),
+              ],
             ),
-          ],
         ),
       ),
     );

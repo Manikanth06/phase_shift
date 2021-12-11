@@ -27,7 +27,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        BackgroundImage(image: 'assets/images/reg.jpg'),
+        BackgroundImage(image: 'assets/images/act_reg.jpg'),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(

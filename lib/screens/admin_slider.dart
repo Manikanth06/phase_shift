@@ -3,22 +3,23 @@ import 'package:flutter/widgets.dart';
 import 'package:foodybite_app/attach/aboutus.dart';
 import 'package:foodybite_app/attach/carousal_slider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'button_card.dart';
-import 'constant.dart';
+import 'package:foodybite_app/attach/button_card.dart';
+import 'package:foodybite_app/attach/constant.dart';
 import 'package:foodybite_app/attach/drawer_card.dart';
-import 'package:foodybite_app/screens/screens.dart';
+//import 'package:foodybite_app/screens/screens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'admin_department_page.dart';
 
 User loggedInUser;
 
-class SliderPage extends StatefulWidget {
+class AdminSliderPage extends StatefulWidget {
   static String id = 'slider_screen';
 
   @override
-  _SliderPageState createState() => _SliderPageState();
+  _AdminSliderPageState createState() => _AdminSliderPageState();
 }
 
-class _SliderPageState extends State<SliderPage> {
+class _AdminSliderPageState extends State<AdminSliderPage> {
   final _auth = FirebaseAuth.instance;
 
   void initState() {
@@ -47,8 +48,8 @@ class _SliderPageState extends State<SliderPage> {
     return Scaffold(
       backgroundColor: Colors.black54,
       appBar: AppBar(
-        title: const Text("PHASE SHIFT"),
         centerTitle: true,
+        title: const Text("PHASE SHIFT - ADMIN"),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.logout),
@@ -114,7 +115,7 @@ class _SliderPageState extends State<SliderPage> {
                   child: ButtonContainer(
                     dept: 'CSE',
                     onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'CSE',deptName: "Computer Science & Engg",),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminDepartmentPage( dept: 'CSE',deptName: "Computer Science & Engg",),));
                     },
                   ),
                 ),
@@ -122,7 +123,7 @@ class _SliderPageState extends State<SliderPage> {
                     child: ButtonContainer(
                       dept: 'ISE',
                       onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ISE',deptName: "Information Science & Engg",),));
+                        Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminDepartmentPage( dept: 'ISE',deptName: "Information Science & Engg",),));
                       },
                     )),
               ],
@@ -133,7 +134,7 @@ class _SliderPageState extends State<SliderPage> {
                   child: ButtonContainer(
                     dept: 'ECE',
                     onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ECE',deptName: "Electronics Engg",),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminDepartmentPage( dept: 'ECE',deptName: "Electronics Engg",),));
                     },
                   ),
                 ),
@@ -141,7 +142,7 @@ class _SliderPageState extends State<SliderPage> {
                   child: ButtonContainer(
                     dept: 'EEE',
                     onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'EEE',deptName: "Electrical Engg",),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminDepartmentPage( dept: 'EEE',deptName: "Electrical Engg",),));
                     },
                   ),
                 ),
@@ -152,14 +153,14 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ML',
-                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ML',deptName: "Machine Learning Engg",),));},
+                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminDepartmentPage( dept: 'ML',deptName: "Machine Learning Engg",),));},
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ME',
                     onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ME',deptName: "Mechanical Science & Engg",),));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminDepartmentPage( dept: 'ME',deptName: "Mechanical Science & Engg",),));
                     },
                   ),
                 ),

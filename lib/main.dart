@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:foodybite_app/screens/event_reg_screen.dart';
+import 'package:foodybite_app/screens/admin_slider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginScreen(),
-        'ForgotPassword': (context) => ForgotPassword(),
+        'AdminLoginScreen': (context) => AdminLoginScreen(),
+        'AdminSliderPage': (context) => AdminSliderPage(),
         'CreateNewAccount': (context) => CreateNewAccount(),
         'EventPage': (context) => EventPage(),
         'SliderPage': (context) => SliderPage(),

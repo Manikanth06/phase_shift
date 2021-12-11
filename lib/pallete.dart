@@ -8,6 +8,10 @@ const Color kWhite = Colors.white;
 const Color kBlue = Color(0xff5663ff);
 
 const kTextFieldDecoration = InputDecoration(
+    hintStyle: TextStyle(
+        fontSize: 20.0,
+        color: Colors.white,
+    ),
     hintText: 'Enter a value',
     contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
     border: OutlineInputBorder(

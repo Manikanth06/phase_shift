@@ -3,47 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:foodybite_app/screens//admin_add.dart';
 import 'package:foodybite_app/screens/event_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
-User lUser;
 
-class DepartmentPage extends StatefulWidget {
-  static String id = 'department_screen';
-
-  DepartmentPage({@required this.dept, this.deptName});
+class AdminDepartmentPage extends StatefulWidget {
+  static String id = 'department_screen_cse';
+  AdminDepartmentPage({@required this.dept, this.deptName});
   String dept;
   String deptName;
 
-
   @override
-  State<DepartmentPage> createState() => _DepartmentPageState();
+  State<AdminDepartmentPage> createState() => _AdminDepartmentPageState();
 }
 
-class _DepartmentPageState extends State<DepartmentPage> {
+class _AdminDepartmentPageState extends State<AdminDepartmentPage> {
+
   final _auth = FirebaseAuth.instance;
-  bool isAdmin = false;
-
-  void initState() {
-    super.initState();
-
-    getCurrentUser();
-  }
-
-  void getCurrentUser() {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        lUser = user;
-        print(lUser.email);
-        if(lUser.email == 'admin@gmail.com'){
-          isAdmin = true;
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +45,8 @@ class _DepartmentPageState extends State<DepartmentPage> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             centerTitle: true,
+            backgroundColor: Colors.black12.withOpacity(0.4),
+            title: const Text('PHASE SHIFT'),
             actions: <Widget>[
               IconButton(
                   icon: Icon(Icons.home),
@@ -75,8 +54,6 @@ class _DepartmentPageState extends State<DepartmentPage> {
                     Navigator.pop(context);
                   }),
             ],
-            backgroundColor: Colors.black12.withOpacity(0.4),
-            title: const Text('PHASE SHIFT'),
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,6 +93,13 @@ class _DepartmentPageState extends State<DepartmentPage> {
               ),
               EventsStream(dept: widget.dept),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: (){
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminAdd(dept: widget.dept,deptName: widget.deptName),));
+            },
+            tooltip: 'admin_add_page',
+            child: const Icon(Icons.add),
           ),
         ),
       ),
@@ -178,12 +162,12 @@ class EventsStream extends StatelessWidget {
 class ListEvent extends StatelessWidget {
   ListEvent(
       {this.name,
-      this.dis,
-      this.abs,
-      this.cod,
-      this.contact,
-      this.date,
-      this.venue});
+        this.dis,
+        this.abs,
+        this.cod,
+        this.contact,
+        this.date,
+        this.venue});
 
   String name;
   String dis;

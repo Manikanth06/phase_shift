@@ -70,6 +70,7 @@ class DrawerCard extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text("Log out"),
             onTap: () {
+              _auth.signOut();
               Navigator.pop(context);
               Navigator.pop(context);
             },

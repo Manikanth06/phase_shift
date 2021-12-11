@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodybite_app/pallete.dart';
-import 'package:foodybite_app/screens/event_screen.dart';
-import 'package:foodybite_app/widgets/widgets.dart';
+import 'package:foodybite_app/widgets/background-image.dart';
+import 'package:foodybite_app/widgets/rounded-button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-class LoginScreen extends StatefulWidget {
+class AdminLoginScreen extends StatefulWidget {
   static String id = 'login_screen';
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _AdminLoginScreenState createState() => _AdminLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AdminLoginScreenState extends State<AdminLoginScreen> {
 
   final _auth = FirebaseAuth.instance;
   String email;
@@ -24,19 +26,31 @@ class _LoginScreenState extends State<LoginScreen> {
     return Stack(
       children: [
         BackgroundImage(
-          image: 'assets/images/log.jpg',
+          image: 'assets/images/admin.jpg',
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: kWhite,
+              ),
+            ),
+          ),
           body: Column(
             children: [
               Flexible(
                 child: Center(
                   child: Text(
-                    'PHASE SHIFT',
+                    'ADMIN',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 50,
+                        fontSize: 60,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -100,13 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, 'AdminLoginScreen'),
-                    child: Text(
-                      'Admin-Login',
-                      style: kBodyText,
-                    ),
-                  ),
                   SizedBox(
                     height: 25,
                   ),
@@ -114,9 +121,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     buttonName: 'Login',
                     onPressed: () async {
                       try{
-                        final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-                        if(user != null){
-                          Navigator.pushNamed(context, 'SliderPage');
+                        if (email == "admin@gmail.com"){
+                          final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                          if(user != null){
+                            Navigator.pushNamed(context, 'AdminSliderPage');
+                          }
                         }
                       }catch(e){
                         print(e);
@@ -127,21 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 25,
                   ),
                 ],
-              ),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(context, 'CreateNewAccount'),
-                child: Container(
-                  child: Text(
-                    'Create New Account',
-                    style: kBodyText,
-                  ),
-                  decoration: BoxDecoration(
-                      border:
-                      Border(bottom: BorderSide(width: 1, color: kWhite))),
-                ),
-              ),
-              SizedBox(
-                height: 20,
               ),
             ],
           ),
