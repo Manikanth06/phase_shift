@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodybite_app/screens/event_screen.dart';
+import 'package:foodybite_app/screens/result_update.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:foodybite_app/screens/event_reg_screen.dart';
 import 'package:foodybite_app/screens/admin_slider.dart';
+import 'package:foodybite_app/screens/result_page.dart';
+import 'package:foodybite_app/screens/admin_result_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +38,9 @@ class MyApp extends StatelessWidget {
         'SliderPage': (context) => SliderPage(),
         'DepartmentPage': (context) => DepartmentPage(),
         'EventRegPage': (context) => EventRegPage(),
+        'ResultUpdatePage': (context) => ResultUpdatePage(),
+        'ResultPage': (context) => ResultPage(),
+        'AdminResultPage': (context) => AdminResultPage(),
       },
     );
   }

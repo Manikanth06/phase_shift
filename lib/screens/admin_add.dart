@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodybite_app/pallete.dart';
 import 'package:foodybite_app/widgets/rounded-button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:foodybite_app/screens/Success.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -26,6 +27,8 @@ class _AdminAddState extends State<AdminAdd> {
   String Description;
   String EventName;
   String Venue;
+  String res="F";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -104,7 +107,7 @@ class _AdminAddState extends State<AdminAdd> {
                             ),
                             style: kBodyText,
                             onChanged: (value) {
-                               EventName = value;
+                              EventName = value;
                             },
                           ),
                         ),
@@ -260,6 +263,34 @@ class _AdminAddState extends State<AdminAdd> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Container(
+                        height: size.height * 0.08,
+                        width: size.width * 0.8,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[500].withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Center(
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: res,
+                              hintStyle: kBodyText.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            style: kBodyText,
+                            onChanged: (value) {
+                              res=value;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 25,
                     ),
@@ -274,8 +305,9 @@ class _AdminAddState extends State<AdminAdd> {
                             'Contact': Contact,
                             'Date': Date,
                             'Venue': Venue,
+                            'Result': res,
                           });
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Event    Added     Successfully :)",)));
                         }),
                     SizedBox(
                       height: 25,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -15,7 +16,7 @@ class DrawerCard extends StatelessWidget {
 
   void getEvent() async {
     await for (var snapshot
-        in _firestore.collection('Eventregister').snapshots()) {
+    in _firestore.collection('Eventregister').snapshots()) {
       for (var event in snapshot.docs) {
         print(event.data());
       }
@@ -66,6 +67,18 @@ class DrawerCard extends StatelessWidget {
           //     Navigator.pop(context);
           //   },
           // ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.poll),
+            title: Text("Results"),
+            onTap: () {
+              if(email == 'admin@gmail.com'){
+                Navigator.pushNamed(context, 'AdminResultPage');
+              }else{
+                Navigator.pushNamed(context, 'ResultPage');
+              }
+            },
+          ),
+
           ListTile(
             leading: Icon(Icons.logout),
             title: Text("Log out"),

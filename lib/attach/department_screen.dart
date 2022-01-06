@@ -4,9 +4,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodybite_app/screens/event_screen.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+
 
 final _firestore = FirebaseFirestore.instance;
 User lUser;
+num c;
+Map<String, int> map= {'abc': 0};
+
+void getCount(String eName){
+  map.forEach((key, value) {
+    if(eName==key) {
+      // print(value);
+      c=value;
+    }
+  });
+}
+
 
 class DepartmentPage extends StatefulWidget {
   static String id = 'department_screen';
@@ -144,18 +159,26 @@ class EventsStream extends StatelessWidget {
             final eventDate = event['Date'];
             final eventVenue = event['Venue'];
             final eventContact = event['Contact'];
+            final eventResult = event['Result'];
+            final eCount = event['Count'];
 
-            messagesWidgets.add(
-              ListEvent(
-                name: eventName,
-                dis: eventDis,
-                abs: eventAbs,
-                cod: eventCod,
-                date: eventDate,
-                venue: eventVenue,
-                contact: eventContact,
-              ),
-            );
+            map[eventName] = int.parse(eCount);
+            //print(map);
+
+            if (eventResult != "T"){
+              messagesWidgets.add(
+                ListEvent(
+                  name: eventName,
+                  dis: eventDis,
+                  abs: eventAbs,
+                  cod: eventCod,
+                  date: eventDate,
+                  venue: eventVenue,
+                  contact: eventContact,
+                  dept: dept,
+                ),
+              );
+            }
           }
           return Expanded(
             child: ListView(
@@ -178,12 +201,13 @@ class EventsStream extends StatelessWidget {
 class ListEvent extends StatelessWidget {
   ListEvent(
       {this.name,
-      this.dis,
-      this.abs,
-      this.cod,
-      this.contact,
-      this.date,
-      this.venue});
+        this.dis,
+        this.abs,
+        this.cod,
+        this.contact,
+        this.date,
+        this.venue,
+        this.dept,});
 
   String name;
   String dis;
@@ -192,6 +216,8 @@ class ListEvent extends StatelessWidget {
   String contact;
   String date;
   String venue;
+  String dept;
+
 
   @override
   Widget build(BuildContext context) {
@@ -239,18 +265,41 @@ class ListEvent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                     child: MaterialButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EventPage(
+                        getCount(name);
+                        if(c >= 2){
+                          Alert(
+                            context: context,
+                            type: AlertType.error,
+                            title: "Registration Full",
+                            desc: "Sorry, registration for this event is closed :(",
+                            buttons: [
+                              DialogButton(
+                                child: Text(
+                                  "OK",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                                width: 120,
+                              )
+                            ],
+                          ).show();
+                        }
+                        else{
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventPage(
                                 name: name,
                                 abs: abs,
                                 cod: cod,
                                 contact: contact,
                                 date: date,
-                                venue: venue),
-                          ),
-                        );
+                                venue: venue,
+                                dept: dept,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       minWidth: 80.0,
                       height: 42.0,

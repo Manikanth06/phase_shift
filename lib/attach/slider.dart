@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foodybite_app/attach/aboutus.dart';
 import 'package:foodybite_app/attach/carousal_slider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:foodybite_app/screens/admin_slider.dart';
 import 'button_card.dart';
 import 'constant.dart';
 import 'package:foodybite_app/attach/drawer_card.dart';
