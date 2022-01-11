@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+const errStyle = TextStyle(
+  color: Color(0x8293FAF5),
+  fontWeight: FontWeight.bold,
+  fontSize: 15,
+);
+
 const kTextStyle1 = TextStyle(
   decoration: TextDecoration.underline,
   fontSize: 40.0,

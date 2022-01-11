@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foodybite_app/attach/aboutus.dart';
 import 'package:foodybite_app/attach/carousal_slider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:foodybite_app/screens/admin_slider.dart';
+import 'package:foodybite_app/pallete.dart';
 import 'button_card.dart';
 import 'constant.dart';
 import 'package:foodybite_app/attach/drawer_card.dart';
@@ -40,11 +40,10 @@ class _SliderPageState extends State<SliderPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     String em = loggedInUser.email.toString();
-    String name = em.split("@")[0];
+    String name = em.split(".")[0].toUpperCase();
     return Scaffold(
       backgroundColor: Colors.black54,
       appBar: AppBar(
@@ -54,8 +53,29 @@ class _SliderPageState extends State<SliderPage> {
           IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Do you really want to exit?",
+                      style: kBodyText,),
+                      actions: [
+                        FlatButton(onPressed: () => {Navigator.pop(context),}, child: Text("No",style: kBodyText,)),
+                        FlatButton(
+                          onPressed: () => {
+                            _auth.signOut(),
+                            Navigator.pop(context),
+                            Navigator.pop(context),
+                          },
+                          child: Text("Yes",
+                          style: kBodyText,),
+                        ),
+                      ],
+                      elevation: 24.0,
+                      backgroundColor: Colors.blueAccent.shade200,
+                    );
+                  }
+                );
               }),
         ],
       ),
@@ -84,19 +104,19 @@ class _SliderPageState extends State<SliderPage> {
                   options: CarouselOptions(height: 250, autoPlay: true),
                   items: [
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation1.jpg',
+                      imgPath: 'assets/images/presentation1.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation2.jpg',
+                      imgPath: 'assets/images/presentation2.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation3.jpg',
+                      imgPath: 'assets/images/presentation3.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation4.jpg',
+                      imgPath: 'assets/images/presentation4.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation4.jpg',
+                      imgPath: 'assets/images/presentation4.jpeg',
                     ),
                   ]),
             ),
@@ -114,18 +134,32 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'CSE',
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'CSE',deptName: "Computer Science & Engg",),));
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DepartmentPage(
+                              dept: 'CSE',
+                              deptName: "Computer Science & Engg",
+                            ),
+                          ));
                     },
                   ),
                 ),
                 Expanded(
                     child: ButtonContainer(
-                      dept: 'ISE',
-                      onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ISE',deptName: "Information Science & Engg",),));
-                      },
-                    )),
+                  dept: 'ISE',
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DepartmentPage(
+                            dept: 'ISE',
+                            deptName: "Information Science & Engg",
+                          ),
+                        ));
+                  },
+                )),
               ],
             ),
             Row(
@@ -133,16 +167,30 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ECE',
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ECE',deptName: "Electronics Engg",),));
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DepartmentPage(
+                              dept: 'ECE',
+                              deptName: "Electronics Engg",
+                            ),
+                          ));
                     },
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'EEE',
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'EEE',deptName: "Electrical Engg",),));
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DepartmentPage(
+                              dept: 'EEE',
+                              deptName: "Electrical Engg",
+                            ),
+                          ));
                     },
                   ),
                 ),
@@ -153,14 +201,30 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ML',
-                    onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ML',deptName: "Machine Learning Engg",),));},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DepartmentPage(
+                              dept: 'ML',
+                              deptName: "Machine Learning Engg",
+                            ),
+                          ));
+                    },
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'ME',
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentPage( dept: 'ME',deptName: "Mechanical Science & Engg",),));
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DepartmentPage(
+                              dept: 'ME',
+                              deptName: "Mechanical Science & Engg",
+                            ),
+                          ));
                     },
                   ),
                 ),
@@ -171,13 +235,13 @@ class _SliderPageState extends State<SliderPage> {
                 Expanded(
                   child: ButtonContainer(
                     dept: 'TC',
-                    onPressed: (){},
+                    onPressed: () {},
                   ),
                 ),
                 Expanded(
                   child: ButtonContainer(
                     dept: 'CE',
-                    onPressed: (){},
+                    onPressed: () {},
                   ),
                 ),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:foodybite_app/pallete.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -82,11 +83,34 @@ class DrawerCard extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text("Log out"),
-            onTap: () {
-              _auth.signOut();
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Do you really want to exit?",
+                style: kBodyText,),
+              actions: [
+                FlatButton(onPressed: () => {Navigator.pop(context),},
+                    child: Text("No", style: kBodyText,)),
+                FlatButton(
+                  onPressed: () =>
+                  {
+                    _auth.signOut(),
+                    Navigator.pop(context),
+                    Navigator.pop(context),
+                    Navigator.pop(context),
+                  },
+                  child: Text("Yes",
+                    style: kBodyText,),
+                ),
+              ],
+              elevation: 24.0,
+              backgroundColor: Colors.blueAccent.shade200,
+            );
+          }
+      );
+    }
           ),
         ],
       ),

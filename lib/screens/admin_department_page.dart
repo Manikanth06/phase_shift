@@ -96,7 +96,7 @@ class _AdminDepartmentPageState extends State<AdminDepartmentPage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminAdd(dept: widget.dept,deptName: widget.deptName),));
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> AdminAddPage(dept: widget.dept,deptName: widget.deptName),));
             },
             tooltip: 'admin_add_page',
             child: const Icon(Icons.add),

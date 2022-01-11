@@ -19,11 +19,11 @@ class ResultUpdatePage extends StatelessWidget {
   void getEvent() async {
     await for (var snapshot in _firestore.collection(dept).snapshots()){
       for (var event in snapshot.docs){
-         if (ename == event['EventName']){
-           doc_id = event.id.toString();
-           print(doc_id);
-           break;
-         }
+        if (ename == event['EventName']){
+          doc_id = event.id.toString();
+          print(doc_id);
+          break;
+        }
       }
     }
   }
@@ -183,15 +183,41 @@ class ResultUpdatePage extends StatelessWidget {
                     RoundedButton(
                         buttonName: 'Upload',
                         onPressed: () {
-                          _firestore.collection('Result').add({
-                            'eventname': ename,
-                            'winner': tname,
-                            'sem': sem,
-                            'department': dept,
-                          });
-                          getEvent();
-                          _firestore.collection(dept).doc(doc_id).update({'Result': 'T'});
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Result Uploaded Successfully :)",)));
+                         if(ename == null || tname == null || sem == null || dept == null){
+                           showDialog(
+                               context: context,
+                               builder: (context) {
+                                 return AlertDialog(
+                                   title: Text(
+                                     "All fields are mandatory, please fill!!",
+                                     style: kBodyText,
+                                   ),
+                                   actions: [
+                                     FlatButton(
+                                         onPressed: () => {
+                                           Navigator.pop(context),
+                                         },
+                                         child: Text(
+                                           "Ok",
+                                           style: kBodyText,
+                                         )),
+                                   ],
+                                   elevation: 24.0,
+                                   backgroundColor: Colors.blueAccent.shade200,
+                                 );
+                               });
+                         }
+                         else{
+                           _firestore.collection('Result').add({
+                             'eventname': ename,
+                             'winner': tname,
+                             'sem': sem,
+                             'department': dept,
+                           });
+                           getEvent();
+                           _firestore.collection(dept).doc(doc_id).update({'Result': 'T'});
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Result Uploaded Successfully :)",)));
+                         }
                         }),
                     SizedBox(
                       height: 25,
@@ -206,4 +232,3 @@ class ResultUpdatePage extends StatelessWidget {
     );
   }
 }
-

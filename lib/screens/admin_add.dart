@@ -6,20 +6,20 @@ import 'package:foodybite_app/screens/Success.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
-class AdminAdd extends StatefulWidget {
+class AdminAddPage extends StatefulWidget {
 
   static String id = 'event_reg';
 
-  AdminAdd({this.dept,this.deptName});
+  AdminAddPage({this.dept,this.deptName});
   String deptName;
   String dept;
 
 
   @override
-  _AdminAddState createState() => _AdminAddState();
+  _AdminAddPageState createState() => _AdminAddPageState();
 }
 
-class _AdminAddState extends State<AdminAdd> {
+class _AdminAddPageState extends State<AdminAddPage> {
   String Abstraction;
   String Coordinator;
   String Contact;
@@ -28,6 +28,7 @@ class _AdminAddState extends State<AdminAdd> {
   String EventName;
   String Venue;
   String res="F";
+  String ct="1";
 
   @override
   Widget build(BuildContext context) {
@@ -291,23 +292,78 @@ class _AdminAddState extends State<AdminAdd> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Container(
+                        height: size.height * 0.08,
+                        width: size.width * 0.8,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[500].withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Center(
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: ct,
+                              hintStyle: kBodyText.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            style: kBodyText,
+                            onChanged: (value) {
+                              ct=value;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 25,
                     ),
                     RoundedButton(
                         buttonName: 'Register',
                         onPressed: () {
-                          _firestore.collection(widget.dept).add({
-                            'EventName': EventName,
-                            'Description': Description,
-                            'Abstraction': Abstraction,
-                            'Co-ordinator': Coordinator,
-                            'Contact': Contact,
-                            'Date': Date,
-                            'Venue': Venue,
-                            'Result': res,
-                          });
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Event    Added     Successfully :)",)));
+                          if(EventName == null || Description == null || Abstraction == null || Coordinator == null || Contact == null || Date == null || Venue == null){
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "All fields are mandatory, please fill!!",
+                                      style: kBodyText,
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () => {
+                                            Navigator.pop(context),
+                                          },
+                                          child: Text(
+                                            "Ok",
+                                            style: kBodyText,
+                                          )),
+                                    ],
+                                    elevation: 24.0,
+                                    backgroundColor: Colors.blueAccent.shade200,
+                                  );
+                                });
+                          }
+                          else{
+                            _firestore.collection(widget.dept).add({
+                              'EventName': EventName,
+                              'Description': Description,
+                              'Abstraction': Abstraction,
+                              'Co-ordinator': Coordinator,
+                              'Contact': Contact,
+                              'Date': Date,
+                              'Venue': Venue,
+                              'Result': res,
+                              'Count': ct,
+                            });
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Event    Added     Successfully :)",)));
+                          }
                         }),
                     SizedBox(
                       height: 25,
@@ -322,139 +378,3 @@ class _AdminAddState extends State<AdminAdd> {
     );
   }
 }
-
-// class reg extends StatelessWidget {
-//   // reg({this.event});
-//
-//   String Abstraction;
-//   String Coordinator;
-//   String Contact;
-//   String Date;
-//   String Description;
-//   String EventName;
-//   String Venue;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: EdgeInsets.symmetric(horizontal: 24.0),
-//           child: Column(
-//             // mainAxisAlignment: MainAxisAlignment.center,
-//             // crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: <Widget>[
-//               SizedBox(
-//                 height: 48.0,
-//               ),
-//               TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   EventName = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: "EventName",
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   Description = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: "Description",
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               TextField(
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   Abstraction = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: 'Abstraction',
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   Coordinator = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: "Co-ordinator",
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   Contact = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: "Contact",
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   Date = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: "Date",
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               TextField(
-//                 keyboardType: TextInputType.emailAddress,
-//                 textAlign: TextAlign.center,
-//                 onChanged: (value) {
-//                   Venue = value;
-//                 },
-//                 decoration: kTextFieldDecoration.copyWith(
-//                   hintText: "Venue",
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               RoundedButton(
-//                   buttonName: 'Register',
-//                   onPressed: () {
-//                     _firestore.collection('Eventregister').add({
-//                       'EventName': EventName,
-//                       'Description': Description,
-//                       'Abstraction': Abstraction,
-//                       'Co-ordinator': Coordinator,
-//                       'Contact': Contact,
-//                       'Date': Date,
-//                       'Venue': Venue,
-//                     });
-//                   }),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

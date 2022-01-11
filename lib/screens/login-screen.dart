@@ -4,7 +4,6 @@ import 'package:foodybite_app/screens/event_screen.dart';
 import 'package:foodybite_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
 
@@ -13,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
@@ -58,8 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                             ),
                             hintText: "Email",
                             hintStyle: kBodyText,
@@ -87,7 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                             ),
                             hintText: "Password",
                             hintStyle: kBodyText,
@@ -101,7 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, 'AdminLoginScreen'),
+                    onTap: () =>
+                        Navigator.pushNamed(context, 'AdminLoginScreen'),
                     child: Text(
                       'Admin-Login',
                       style: kBodyText,
@@ -113,13 +113,85 @@ class _LoginScreenState extends State<LoginScreen> {
                   RoundedButton(
                     buttonName: 'Login',
                     onPressed: () async {
-                      try{
-                        final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-                        if(user != null){
-                          Navigator.pushNamed(context, 'SliderPage');
+                      try {
+                        if (email == null || password == null) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    "Email or password cannot be null",
+                                    style: kBodyText,
+                                  ),
+                                  actions: [
+                                    FlatButton(
+                                        onPressed: () => {
+                                              Navigator.pop(context),
+                                            },
+                                        child: Text(
+                                          "Ok",
+                                          style: kBodyText,
+                                        )),
+                                  ],
+                                  elevation: 24.0,
+                                  backgroundColor: Colors.blueAccent.shade200,
+                                );
+                              });
+                        } else {
+                          if (email.split("@")[1] != "bmsce.ac.in") {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "Only BMSCE email is allowed!!!",
+                                      style: kBodyText,
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () => {
+                                                Navigator.pop(context),
+                                              },
+                                          child: Text(
+                                            "Ok",
+                                            style: kBodyText,
+                                          )),
+                                    ],
+                                    elevation: 24.0,
+                                    backgroundColor: Colors.blueAccent.shade200,
+                                  );
+                                });
+                          } else {
+                            final user = await _auth.signInWithEmailAndPassword(
+                                email: email, password: password);
+                            if (user != null) {
+                              Navigator.pushNamed(context, 'SliderPage');
+                            }
+                          }
                         }
-                      }catch(e){
-                        print(e);
+                      } catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                  e.toString().split("]")[1],
+                                  style: kBodyText,
+                                ),
+                                actions: [
+                                  FlatButton(
+                                      onPressed: () => {
+                                        Navigator.pop(context),
+                                      },
+                                      child: Text(
+                                        "Ok",
+                                        style: kBodyText,
+                                      )),
+                                ],
+                                elevation: 24.0,
+                                backgroundColor: Colors.blueAccent.shade200,
+                              );
+                            });
                       }
                     },
                   ),
@@ -137,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   decoration: BoxDecoration(
                       border:
-                      Border(bottom: BorderSide(width: 1, color: kWhite))),
+                          Border(bottom: BorderSide(width: 1, color: kWhite))),
                 ),
               ),
               SizedBox(

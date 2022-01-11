@@ -5,8 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodybite_app/pallete.dart';
 import 'package:foodybite_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:foodybite_app/screens/login-screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 
 class CreateNewAccount extends StatefulWidget {
@@ -142,10 +140,60 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       buttonName: 'Register',
                       onPressed: () async {
                         try {
-                          final newUser = await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-                          if (newUser != null) {
-                            Navigator.pushNamed(context, '/');
+                          if (email == null || password == null) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "Email or password cannot be null",
+                                      style: kBodyText,
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () => {
+                                            Navigator.pop(context),
+                                          },
+                                          child: Text(
+                                            "Ok",
+                                            style: kBodyText,
+                                          )),
+                                    ],
+                                    elevation: 24.0,
+                                    backgroundColor: Colors.blueAccent.shade200,
+                                  );
+                                });
+                          } else {
+                            if (email.split("@")[1] != "bmsce.ac.in") {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Only BMSCE email is allowed!!!",
+                                        style: kBodyText,
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () => {
+                                              Navigator.pop(context),
+                                            },
+                                            child: Text(
+                                              "Ok",
+                                              style: kBodyText,
+                                            )),
+                                      ],
+                                      elevation: 24.0,
+                                      backgroundColor: Colors.blueAccent.shade200,
+                                    );
+                                  });
+                            } else {
+                              final newUser = await _auth.createUserWithEmailAndPassword(
+                                  email: email, password: password);
+                              if (newUser != null) {
+                                Navigator.pushNamed(context, '/');
+                              }
+                            }
                           }
                         } catch (e) {
                           print(e);
@@ -187,6 +235,4 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     );
   }
 }
-
-
 

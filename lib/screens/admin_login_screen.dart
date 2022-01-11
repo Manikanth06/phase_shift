@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodybite_app/pallete.dart';
 import 'package:foodybite_app/widgets/background-image.dart';
 import 'package:foodybite_app/widgets/rounded-button.dart';
@@ -121,14 +119,67 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                     buttonName: 'Login',
                     onPressed: () async {
                       try{
-                        if (email == "admin@gmail.com"){
+                        if(email == null || password == null){
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Email or password cannot be null",
+                                    style: kBodyText,),
+                                  actions: [
+                                    FlatButton(onPressed: () => {Navigator.pop(context),}, child: Text("Ok",style: kBodyText,)),
+                                  ],
+                                  elevation: 24.0,
+                                  backgroundColor: Colors.blueAccent.shade200,
+                                );
+                              }
+                          );
+                        }
+                        else if (email != "admin@gmail.com"){
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Only admin can login!!!",
+                                    style: kBodyText,),
+                                  actions: [
+                                    FlatButton(onPressed: () => {Navigator.pop(context),}, child: Text("Ok",style: kBodyText,)),
+                                  ],
+                                  elevation: 24.0,
+                                  backgroundColor: Colors.blueAccent.shade200,
+                                );
+                              }
+                          );
+                        }
+                        else{
                           final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
                           if(user != null){
                             Navigator.pushNamed(context, 'AdminSliderPage');
                           }
                         }
                       }catch(e){
-                        print(e);
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                  e.toString().split("]")[1],
+                                  style: kBodyText,
+                                ),
+                                actions: [
+                                  FlatButton(
+                                      onPressed: () => {
+                                        Navigator.pop(context),
+                                      },
+                                      child: Text(
+                                        "Ok",
+                                        style: kBodyText,
+                                      )),
+                                ],
+                                elevation: 24.0,
+                                backgroundColor: Colors.blueAccent.shade200,
+                              );
+                            });
                       }
                     },
                   ),

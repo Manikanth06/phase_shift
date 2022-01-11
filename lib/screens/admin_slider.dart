@@ -6,7 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:foodybite_app/attach/button_card.dart';
 import 'package:foodybite_app/attach/constant.dart';
 import 'package:foodybite_app/attach/drawer_card.dart';
-//import 'package:foodybite_app/screens/screens.dart';
+import 'package:foodybite_app/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'admin_department_page.dart';
 
@@ -54,8 +54,29 @@ class _AdminSliderPageState extends State<AdminSliderPage> {
           IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Do you really want to exit?",
+                          style: kBodyText,),
+                        actions: [
+                          FlatButton(onPressed: () => {Navigator.pop(context),}, child: Text("No",style: kBodyText,)),
+                          FlatButton(
+                            onPressed: () => {
+                              _auth.signOut(),
+                              Navigator.pop(context),
+                              Navigator.pop(context),
+                            },
+                            child: Text("Yes",
+                              style: kBodyText,),
+                          ),
+                        ],
+                        elevation: 24.0,
+                        backgroundColor: Colors.blueAccent.shade200,
+                      );
+                    }
+                );
               }),
         ],
       ),
@@ -84,19 +105,19 @@ class _AdminSliderPageState extends State<AdminSliderPage> {
                   options: CarouselOptions(height: 250, autoPlay: true),
                   items: [
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation1.jpg',
+                      imgPath: 'assets/images/presentation1.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation2.jpg',
+                      imgPath: 'assets/images/presentation2.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation3.jpg',
+                      imgPath: 'assets/images/presentation3.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation4.jpg',
+                      imgPath: 'assets/images/presentation4.jpeg',
                     ),
                     CarousalSlider(
-                      imgPath: 'assets/images/presentation4.jpg',
+                      imgPath: 'assets/images/presentation4.jpeg',
                     ),
                   ]),
             ),

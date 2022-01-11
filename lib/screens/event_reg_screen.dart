@@ -244,17 +244,43 @@ class EventRegPage extends StatelessWidget {
                     RoundedButton(
                         buttonName: 'Register',
                         onPressed: () {
-                          _firestore.collection('Eventregister').add({
-                            'name': name,
-                            'email': email,
-                            'usn': usn,
-                            'department': dept,
-                            'sem': sem,
-                            'event': d_event,
-                          });
-                          getEvent();
-                          _firestore.collection(dept).doc(doc_id).update({'Count' : cs});
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Registration Successful :)",)));
+                          if(name == null || email == null || usn == null || sem == null){
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "All fields are mandatory, please fill!!!",
+                                      style: kBodyText,
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () => {
+                                            Navigator.pop(context),
+                                          },
+                                          child: Text(
+                                            "Ok",
+                                            style: kBodyText,
+                                          )),
+                                    ],
+                                    elevation: 24.0,
+                                    backgroundColor: Colors.blueAccent.shade200,
+                                  );
+                                });
+                          }
+                          else{
+                            _firestore.collection('Eventregister').add({
+                              'name': name,
+                              'email': email,
+                              'usn': usn,
+                              'department': dept,
+                              'sem': sem,
+                              'event': d_event,
+                            });
+                            getEvent();
+                            _firestore.collection(dept).doc(doc_id).update({'Count' : cs});
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(dialog: "Registration Successful :)",)));
+                          }
                         }),
                     SizedBox(
                       height: 25,
@@ -269,120 +295,3 @@ class EventRegPage extends StatelessWidget {
     );
   }
 }
-
-// Padding(
-// padding: EdgeInsets.symmetric(horizontal: 24.0),
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.spaceAround,
-// crossAxisAlignment: CrossAxisAlignment.stretch,
-// children: <Widget>[
-// BackgroundImage(image: 'assets/images/log.jpg'),
-// SizedBox(
-// height: 48.0,
-// ),
-// TextField(
-// keyboardType: TextInputType.emailAddress,
-// textAlign: TextAlign.center,
-// onChanged: (value) {
-// name = value;
-// },
-// decoration: kTextFieldDecoration.copyWith(
-// hintText: "Name",
-// ),
-// ),
-// SizedBox(
-// height: 20.0,
-// ),
-// TextField(
-// keyboardType: TextInputType.emailAddress,
-// textAlign: TextAlign.center,
-// onChanged: (value) {
-// email = value;
-// },
-// decoration: kTextFieldDecoration.copyWith(
-// hintText: "Email",
-// ),
-// ),
-// SizedBox(
-// height: 20.0,
-// ),
-// TextField(
-// textAlign: TextAlign.center,
-// onChanged: (value) {
-// usn = value;
-// },
-// decoration: kTextFieldDecoration.copyWith(
-// hintText: 'USN',
-// ),
-// ),
-// SizedBox(
-// height: 20.0,
-// ),
-// TextField(
-// keyboardType: TextInputType.emailAddress,
-// textAlign: TextAlign.center,
-// onChanged: (value) {
-// dept = value;
-// },
-// decoration: kTextFieldDecoration.copyWith(
-// hintText: "Deparment",
-// ),
-// ),
-// SizedBox(
-// height: 20.0,
-// ),
-// TextField(
-// keyboardType: TextInputType.emailAddress,
-// textAlign: TextAlign.center,
-// onChanged: (value) {
-// sem = value;
-// },
-// decoration: kTextFieldDecoration.copyWith(
-// hintText: "Sem",
-// ),
-// ),
-// SizedBox(
-// height: 20.0,
-// ),
-// TextField(
-// keyboardType: TextInputType.emailAddress,
-// textAlign: TextAlign.center,
-// onChanged: (value) {
-// event = value;
-// },
-// decoration: kTextFieldDecoration.copyWith(
-// hintText: event,
-// hintStyle: TextStyle(
-// color: Colors.red,
-// fontSize: 20.0,
-// fontWeight: FontWeight.w600,
-// ),
-// ),
-// ),
-// SizedBox(
-// height: 20.0,
-// ),
-// RoundedButton(
-// buttonName: 'Register',
-// onPressed: () {
-// _firestore.collection('Eventregister').add({
-// 'name': name,
-// 'email': email,
-// 'usn': usn,
-// 'department': dept,
-// 'sem': sem,
-// 'event': event,
-// });
-// }),
-// ],
-// ),
-// ),
-
-//Size size = MediaQuery.of(context).size;
-// return Scaffold(
-//   appBar: AppBar(
-//     title: Center(child: Text("Phase Shift")),
-//   ),
-//   backgroundColor: Colors.transparent,
-//   body:
-// );
